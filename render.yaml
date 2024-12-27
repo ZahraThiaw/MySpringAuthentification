@@ -1,0 +1,6 @@
+runtime: java
+build:
+  commands:
+    - ./mvnw clean install
+env:
+  java_version: 17
