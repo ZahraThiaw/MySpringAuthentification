@@ -1,72 +1,46 @@
 package org.example.zahra.springauthentification.Web.Filters;
 
-
-import org.springframework.stereotype.Component;
-import org.springframework.http.MediaType;
-import org.springframework.web.util.ContentCachingResponseWrapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.*;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
 
-@Component
+@WebFilter("/*")
 public class ResponseFilter implements Filter {
 
-    private static final List<String> SWAGGER_PATHS = Arrays.asList(
-            "/api-docs",
-            "/swagger-ui",
-            "swagger-ui.html"
-    );
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Initialisation du filtre (vide si non nécessaire)
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String path = httpRequest.getRequestURI();
 
-        boolean isSwaggerPath = SWAGGER_PATHS.stream()
-                .anyMatch(path::contains);
+        // Initialiser l'objet ApiResponse avec des valeurs par défaut
+        ApiResponse<Object> apiResponse = new ApiResponse<>();
 
-        if (!isSwaggerPath) {
+        try {
+            // Passer la requête et la réponse au prochain filtre ou servlet
             chain.doFilter(request, response);
-            return;
+        } catch (Exception e) {
+            // Capturer l'exception et renseigner la réponse d'API
+            apiResponse.setStatus("ERROR");
+            apiResponse.setStatusCode(500); // Code d'erreur HTTP
+            apiResponse.setMessage("Une erreur s'est produite lors du traitement de la requête");
+            apiResponse.setData(null); // Pas de données spécifiques
+
+            // Vous pouvez ici ajouter la logique pour renvoyer cette réponse en tant que JSON, par exemple.
+            response.getWriter().write(apiResponse.toString());
         }
-
-        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(
-                (HttpServletResponse) response);
-
-        chain.doFilter(request, responseWrapper);
-
-        String responseBody = new String(responseWrapper.getContentAsByteArray(),
-                StandardCharsets.UTF_8);
-
-        if (!responseBody.isEmpty()) {
-            ApiResponse<Object> apiResponse = new ApiResponse<>();
-            apiResponse.setStatus(responseWrapper.getStatus() < 400 ? "SUCCESS" : "ERROR");
-            apiResponse.setStatusCode(responseWrapper.getStatus());
-            apiResponse.setMessage(responseWrapper.getStatus() < 400 ?
-                    "Request processed successfully" : "Error processing request");
-            apiResponse.setData(responseBody.isEmpty() ? null :
-                    new ObjectMapper().readValue(responseBody, Object.class));
-
-            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.getWriter().write(new ObjectMapper().writeValueAsString(apiResponse));
-        }
-
-        responseWrapper.copyBodyToResponse();
-    }
-
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // Initialization logic if needed
     }
 
     @Override
     public void destroy() {
-        // Cleanup logic if needed
+        // Libérer les ressources si nécessaire
     }
 }
