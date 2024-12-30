@@ -20,6 +20,15 @@
 		<model.mapper.version>3.1.1</model.mapper.version>
 	</properties>
 
+	<!-- Configuration pour GitHub Packages -->
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/ZahraThiaw/MySpringDependencies</url>
+		</repository>
+	</distributionManagement>
+
+
 	<dependencies>
 
 		<!-- Dépendances existantes -->
@@ -119,15 +128,6 @@
     </plugin>
 </plugins>
 </build>
-
-<!-- Configuration pour GitHub Packages -->
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/ZahraThiaw/MySpringDependencies</url>
-		</repository>
-	</distributionManagement>
 
 
 </project>
