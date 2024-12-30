@@ -11,7 +11,7 @@
 
 	<groupId>org.example.zahra</groupId>
 	<artifactId>SpringAuthentification</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>SpringAuthentification</name>
 	<description>SpringAuthentification</description>
 
@@ -21,6 +21,7 @@
 	</properties>
 
 	<dependencies>
+
 		<!-- Dépendances existantes -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
