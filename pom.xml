@@ -5,32 +5,44 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.1</version>
+		<version>3.2.1</version>
 		<relativePath/>
 	</parent>
 
 	<groupId>org.example.zahra</groupId>
 	<artifactId>SpringAuthentification</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>SpringAuthentification</name>
 	<description>SpringAuthentification</description>
 
 	<properties>
 		<java.version>17</java.version>
 		<model.mapper.version>3.1.1</model.mapper.version>
+		<!-- Ajoutez cette ligne -->
+		<github.packages.owner>ZahraThiaw</github.packages.owner>
 	</properties>
 
 	<!-- Configuration pour GitHub Packages -->
 	<distributionManagement>
 		<repository>
 			<id>github</id>
+			<name>GitHub OWNER Apache Maven Packages</name>
 			<url>https://maven.pkg.github.com/ZahraThiaw/MySpringDependencies</url>
 		</repository>
 	</distributionManagement>
 
+	<!-- Ajoutez cette section -->
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/ZahraThiaw/MySpringDependencies</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<dependencies>
-
 		<!-- Dépendances existantes -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -99,35 +111,33 @@
 		</dependency>
 
 </dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.3.4</version>
+				<configuration>
+					<classifier>exec</classifier>
+				</configuration><!-- Matches Spring Boot parent version -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
-<build>
-<plugins>
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-            <annotationProcessorPaths>
-                <path>
-                    <groupId>org.projectlombok</groupId>
-                    <artifactId>lombok</artifactId>
-                </path>
-            </annotationProcessorPaths>
-        </configuration>
-    </plugin>
-    <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-            <excludes>
-                <exclude>
-                    <groupId>org.projectlombok</groupId>
-                    <artifactId>lombok</artifactId>
-                </exclude>
-            </excludes>
-        </configuration>
-    </plugin>
-</plugins>
-</build>
+
+	<!-- Assurez-vous que ces informations sont présentes -->
+	<scm>
+		<connection>scm:git:git://github.com/ZahraThiaw/MySpringDependencies.git</connection>
+		<developerConnection>scm:git:ssh://github.com:ZahraThiaw/MySpringDependencies.git</developerConnection>
+		<url>https://github.com/ZahraThiaw/MySpringDependencies</url>
+	</scm>
 
 
 </project>
