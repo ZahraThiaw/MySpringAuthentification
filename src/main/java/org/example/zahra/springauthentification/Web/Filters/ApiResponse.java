@@ -2,56 +2,25 @@ package org.example.zahra.springauthentification.Web.Filters;
 
 import lombok.Data;
 
-// Utilisation de Lombok pour générer les getters, setters, toString, etc.
+import java.util.List;
+
 @Data
 public class ApiResponse<T> {
-
-    private String status;
-    private int statusCode;
+    private boolean success;
     private String message;
     private T data;
+    private List<String> errors;
+    private String status;
+    private int statusCode;
 
-    // Constructeur vide
     public ApiResponse() {}
 
-    // Constructeur avec paramètres
-    public ApiResponse(String status, int statusCode, String message, T data) {
-        this.status = status;
-        this.statusCode = statusCode;
+    public ApiResponse(boolean success, String message, T data, List<String> errors, String status, int statusCode) {
+        this.success = success;
         this.message = message;
         this.data = data;
-    }
-
-    // Setters et Getters (si vous ne souhaitez pas utiliser Lombok)
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
+        this.errors = errors;
         this.status = status;
-    }
-
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

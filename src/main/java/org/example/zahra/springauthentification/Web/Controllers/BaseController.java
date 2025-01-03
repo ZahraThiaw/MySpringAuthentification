@@ -1,20 +1,17 @@
 package org.example.zahra.springauthentification.Web.Controllers;
 
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public interface BaseController<E, ID> {
+public interface BaseController<E, ID, R> {
+    ResponseEntity<R> create(E entity);
 
-    ResponseEntity<E> create(@RequestBody E entity);
+    ResponseEntity<R> update(ID id, E entity);
 
-    ResponseEntity<E> update(@PathVariable ID id, @RequestBody E entity);
+    ResponseEntity<R> getById(ID id);
 
-    ResponseEntity<E> getById(@PathVariable ID id);
+    ResponseEntity<List<R>> getAll();
 
-    ResponseEntity<List<E>> getAll();
-
-    ResponseEntity<Void> delete(@PathVariable ID id);
+    ResponseEntity<Void> delete(ID id);
 }
