@@ -3,6 +3,7 @@ package org.example.zahra.springauthentification.Web.Controllers.Impl;
 import org.example.zahra.springauthentification.Datas.Entities.UserEntity;
 import org.example.zahra.springauthentification.Mappers.GenericMapper;
 import org.example.zahra.springauthentification.Services.UserService;
+import org.example.zahra.springauthentification.Web.Controllers.UserController;
 import org.example.zahra.springauthentification.Web.Dtos.Responses.UserResponseDTO;
 import org.example.zahra.springauthentification.Web.Filters.ApiResponse;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RequestMapping("/users")
 @RestController
-public class UserControllerImpl extends BaseControllerImpl<UserEntity, Long, UserResponseDTO> {
+public class UserControllerImpl extends BaseControllerImpl<UserEntity, Long, UserResponseDTO> implements UserController {
 
     private final UserService userService;
 
@@ -25,6 +26,7 @@ public class UserControllerImpl extends BaseControllerImpl<UserEntity, Long, Use
         this.userService = userService;
     }
 
+    @Override
     @GetMapping("/profile")
     public ResponseEntity<ApiResponse<UserResponseDTO>> getConnectedUserProfile() {
         UserResponseDTO profile = userService.getConnectedUserProfile();
@@ -39,6 +41,7 @@ public class UserControllerImpl extends BaseControllerImpl<UserEntity, Long, Use
         return ResponseEntity.ok(response);
     }
 
+    @Override
     @GetMapping
     public ResponseEntity<ApiResponse<List<UserResponseDTO>>> getAllUsers() {
         List<UserResponseDTO> users = userService.getAllUsers();
