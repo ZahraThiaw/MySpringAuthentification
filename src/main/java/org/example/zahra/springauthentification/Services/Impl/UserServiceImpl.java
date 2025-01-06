@@ -7,9 +7,6 @@ import org.example.zahra.springauthentification.Services.UserService;
 import org.example.zahra.springauthentification.Web.Dtos.Responses.UserResponseDTO;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserEntity, Long> implements UserService {
 
@@ -32,11 +29,4 @@ public class UserServiceImpl extends BaseServiceImpl<UserEntity, Long> implement
         return userMapper.toResponseDto(user); // Mapper vers UserResponseDTO
     }
 
-    @Override
-    public List<UserResponseDTO> getAllUsers() {
-        List<UserEntity> users = userRepository.findAll();
-        return users.stream()
-                .map(userMapper::toResponseDto)
-                .collect(Collectors.toList());
-    }
 }

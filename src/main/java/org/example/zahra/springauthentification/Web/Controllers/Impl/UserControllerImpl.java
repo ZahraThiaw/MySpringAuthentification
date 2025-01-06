@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
-import java.util.List;
 
 @RequestMapping("/users")
 @RestController
@@ -41,18 +40,7 @@ public class UserControllerImpl extends BaseControllerImpl<UserEntity, Long, Use
         return ResponseEntity.ok(response);
     }
 
-    @Override
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<UserResponseDTO>>> getAllUsers() {
-        List<UserResponseDTO> users = userService.getAllUsers();
-        ApiResponse<List<UserResponseDTO>> response = new ApiResponse<>(
-                true,
-                "Liste des utilisateurs récupérée avec succès",
-                users,
-                Collections.emptyList(),
-                "OK",
-                200
-        );
-        return ResponseEntity.ok(response);
-    }
+
+
+
 }

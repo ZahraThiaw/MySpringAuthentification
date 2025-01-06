@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface UserController extends BaseController<UserEntity, Long, UserResponseDTO> {
     ResponseEntity<ApiResponse<UserResponseDTO>> getConnectedUserProfile();
-    ResponseEntity<ApiResponse<List<UserResponseDTO>>> getAllUsers();
+    //ResponseEntity<ApiResponse<List<UserResponseDTO>>> getAllUsers();
 }
